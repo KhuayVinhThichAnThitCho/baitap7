@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<body>
+<div layout:fragment="content" style="padding:20px; font-family:Arial, sans-serif;">
+
+    <h2 style="margin-bottom:20px; color:#333;">Category Details</h2>
+
+    <div th:if="${category != null}">
+        <table style="width:50%; border-collapse:collapse; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+            <tr style="background-color:#f2f2f2;">
+                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">ID</th>
+                <td style="padding:10px; border-bottom:1px solid #ddd;" th:text="${category.id}"></td>
+            </tr>
+            <tr>
+                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Name</th>
+                <td style="padding:10px; border-bottom:1px solid #ddd;" th:text="${category.name}"></td>
+            </tr>
+            <tr style="background-color:#f9f9f9;">
+                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Description</th>
+                <td style="padding:10px; border-bottom:1px solid #ddd;" th:text="${category.description}"></td>
+            </tr>
+            <tr>
+                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Created At</th>
+                <td style="padding:10px; border-bottom:1px solid #ddd;"
+                    th:text="${category.createdAt != null ? #temporals.format(category.createdAt,'dd/MM/yyyy HH:mm') : ''}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${category == null}" style="color:red; font-weight:bold; margin-bottom:15px;">
+        <p>Category not found.</p>
+    </div>
+
+    <div style="margin-top:20px;">
+        <a th:href="@{/categories}"
+           style="padding:6px 12px; background-color:#2196F3; color:white; border-radius:4px; text-decoration:none;">
+            Back to List
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

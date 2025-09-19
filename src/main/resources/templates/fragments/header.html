@@ -1,0 +1,21 @@
+<header th:fragment="header">
+    <div
+            style="display:flex; align-items:center; justify-content:space-between;
+               background-color:#4CAF50; color:white; padding:10px 20px;
+               font-family: Arial, sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <img th:src="@{/images/img.jpg}" alt="My Photo"
+                 style="height:50px; width:50px; object-fit:cover; border-radius:50%; border:2px solid white;">
+            <span style="font-size:1.2rem; font-weight:bold;">My App</span>
+        </div>
+
+        <nav>
+            <a th:href="@{/categories}"
+               style="color:white; margin-right:15px; text-decoration:none; font-weight:500; transition: color 0.3s;"
+               onmouseover="this.style.color='#FFD700';"
+               onmouseout="this.style.color='white';">
+                Categories
+            </a>
+        </nav>
+    </div>
+</header>

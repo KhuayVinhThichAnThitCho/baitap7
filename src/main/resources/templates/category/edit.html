@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<body>
+<div layout:fragment="content" style="padding:20px; font-family:Arial, sans-serif; max-width:600px; margin:auto;">
+
+    <h2 style="margin-bottom:20px; color:#333;">Edit Category</h2>
+
+    <form th:action="@{/categories/save}" th:object="${category}" method="post"
+          style="background-color:#f9f9f9; padding:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+
+        <div style="margin-bottom:15px;">
+            <label style="display:block; margin-bottom:5px; font-weight:bold;">Name:</label>
+            <input type="text" th:field="*{name}" required
+                   style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                  style="color:red; font-size:0.9em;"></span>
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label style="display:block; margin-bottom:5px; font-weight:bold;">Description:</label>
+            <textarea th:field="*{description}" rows="4"
+                      style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;"></textarea>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                  style="color:red; font-size:0.9em;"></span>
+        </div>
+
+        <div style="margin-top:20px;">
+            <button type="submit"
+                    style="padding:8px 16px; background-color:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;">
+                Update
+            </button>
+            <a th:href="@{/categories}"
+               style="padding:8px 16px; margin-left:10px; background-color:#f44336; color:white; border-radius:4px; text-decoration:none;">
+                Cancel
+            </a>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<body>
+<div layout:fragment="content" style="padding: 20px; font-family: Arial, sans-serif;">
+
+    <h2 style="margin-bottom: 20px; color: #333;">Category List</h2>
+
+    <!-- Search Form -->
+    <form th:action="@{/categories}" method="get" style="margin-bottom:15px; display:flex; gap:10px; align-items:center;">
+        <input type="text" name="q" placeholder="Search by name" th:value="${q}"
+               style="padding:5px 10px; border-radius:4px; border:1px solid #ccc; flex:1;">
+        <button type="submit"
+                style="padding:6px 12px; border:none; background-color:#4CAF50; color:white; border-radius:4px; cursor:pointer;">
+            Search
+        </button>
+    </form>
+
+    <a th:href="@{/categories/create}"
+       style="display:inline-block; margin-bottom:15px; padding:6px 12px; background-color:#2196F3; color:white; border-radius:4px; text-decoration:none;">
+        Create New Category
+    </a>
+
+    <table style="width:100%; border-collapse:collapse; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <thead>
+        <tr style="background-color:#f2f2f2; text-align:left;">
+            <th style="padding:10px; border-bottom:1px solid #ddd;">ID</th>
+            <th style="padding:10px; border-bottom:1px solid #ddd;">Name</th>
+            <th style="padding:10px; border-bottom:1px solid #ddd;">Description</th>
+            <th style="padding:10px; border-bottom:1px solid #ddd;">Created At</th>
+            <th style="padding:10px; border-bottom:1px solid #ddd;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cat : ${categories}" style="border-bottom:1px solid #eee;">
+            <td style="padding:8px;" th:text="${cat.id}"></td>
+            <td style="padding:8px;" th:text="${cat.name}"></td>
+            <td style="padding:8px;" th:text="${cat.description}"></td>
+            <td style="padding:8px;" th:text="${cat.createdAt != null ? #temporals.format(cat.createdAt,'dd/MM/yyyy HH:mm') : ''}"></td>
+            <td style="padding:8px;">
+                <a th:href="@{/categories/view/{id}(id=${cat.id})}" style="margin-right:8px; color:#4CAF50; text-decoration:none;">View</a>
+                <a th:href="@{/categories/edit/{id}(id=${cat.id})}" style="margin-right:8px; color:#2196F3; text-decoration:none;">Edit</a>
+
+                <!-- Delete as POST form to fix 405 error -->
+                <form th:action="@{/categories/delete/{id}(id=${cat.id})}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Are you sure?')"
+                            style="background:none; border:none; color:red; cursor:pointer; padding:0; text-decoration:underline;">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:center;"
+         th:if="${currentPage != null and totalPages != null}">
+        <span th:text="'Page ' + (${currentPage}+1) + ' of ' + ${totalPages}"></span>
+        <div>
+            <a th:if="${currentPage > 0}"
+               th:href="@{/categories(page=${currentPage-1},q=${q})}"
+               style="margin-right:10px; text-decoration:none; color:#2196F3;">Prev</a>
+            <a th:if="${currentPage+1 < totalPages}"
+               th:href="@{/categories(page=${currentPage+1},q=${q})}"
+               style="text-decoration:none; color:#2196F3;">Next</a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
